@@ -33,7 +33,13 @@ The example repository uses an AWS CodeBuild project that runs Playwright tests 
 
 Here's an example of a build that has 1 batch job (1) triggering 3 parallel build jobs (2):
 
+![currents-2023-11-15-13 23 30@2x](https://github.com/currents-dev/playwright-aws-codebuild-example/assets/1637928/182580b2-f8c4-4ed1-9dd0-2d217c03954c)
+
+
 The corresponding run in Currents dashboard:
+
+https://github.com/currents-dev/playwright-aws-codebuild-example/assets/1637928/9c0bc332-add2-476a-812a-645b9c56ce64
+
 
 ## AWS Setup
 
