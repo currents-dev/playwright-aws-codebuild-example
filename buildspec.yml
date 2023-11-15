@@ -28,8 +28,8 @@ phases:
       # - export COMMIT_INFO_SHA="$(git log -1 --pretty=%H)"
       # - export COMMIT_INFO_REMOTE="$(git config --get remote.origin.url)"
       - npm ci
-      # - npx playwright install
-      # - npx playwright install-deps
+      - npx playwright install
+      - npx playwright install-deps
 
   build:
     commands:
