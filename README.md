@@ -37,6 +37,8 @@ The corresponding run in Currents dashboard:
 
 ## AWS Setup
 
+Please refer to the [sample output of AWS CodeBuild project configuration](./aws-project-config-output.json) used for this demo. The output was generated using this command: `aws codebuild batch-get-projects --names playwright-currents-example`. Alternatively, follow the instructions below.
+
 ### Obtain Currents Credentials
 
 - Create an organization, get your **Record Key** and **Project ID** at https://app.currents.dev.
@@ -63,7 +65,7 @@ Save the **Record Key** as `CURRENTS_RECORD_KEY` [Environment variable](https://
 - Configure the repository details and the events that should trigger new builds
 - Configure **Primary source webhook events > Build Type** to **Batch build** to start 3 parallel workers in [matrix mode](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build).
 
-#### Playwright Parallelization / Sharding
+## Playwright Parallelization / Sharding
 
 The `buildspec.yml` file uses [matrix mode](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build) to start 3 containers for running the test in parallel. Each container will have the environment variable `WORKER` set to `1,2,3` correspondingly - we can use it to configure [Playwright Sharding](https://playwright.dev/docs/test-parallel#shard-tests-between-multiple-machines)
 
@@ -84,25 +86,27 @@ The `buildspec.yml` file uses [matrix mode](https://docs.aws.amazon.com/codebuil
       - npx pwc --project-id bnsqNa --key $CURRENTS_RECORD_KEY --ci-build-id $CODEBUILD_INITIATOR --shard $WORKER/3
 ```
 
-#### CI Build ID for interactive runs
+## CI Build ID for AWS CodeBuild
 
 The example uses [CODEBUILD_INITIATOR](https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-env-vars.html) as a [CI Build ID](https://currents.dev/readme/guides/cypress-ci-build-id). If you trigger the build manually, the `CODEBUILD_INITIATOR` will be set to the username of the build initiator and you can get warnings after recording multiple results for the same CI build ID.
 
 When a build is triggered by a push / PR (and a batched build is created), the variable will have a unique ID associated that won' trigger conflict warnings.
 
-- Create a new Build Project in AWS CodeBuild - set the resource class and AWS-specific configuration according to your needs.
+## Using Currents Reporter
 
-The example uses `pwc` CLI command to run the tests, you can use `npx playwright test` command and configure `@currents/playwright` as a reporter. Please refer to [documentation](https://currents.dev/readme/integration-with-playwright/currents-playwright#currents-playwright-reporter).
+The example uses `pwc` CLI command to run the tests. You can use `npx playwright test` command and configure `@currents/playwright` as a reporter. Please refer to the [documentation](https://currents.dev/readme/integration-with-playwright/currents-playwright#currents-playwright-reporter).
 
 ## Running Locally
 
 Based on: https://docs.aws.amazon.com/codebuild/latest/userguide/use-codebuild-agent.html
 
 ```sh
-
 curl -O  https://raw.githubusercontent.com/aws/aws-codebuild-docker-images/master/local_builds/codebuild_build.sh
 chmod +x codebuild_build.sh
 
 # For MacBook M1
-./codebuild_build.sh -i public.ecr.aws/codebuild/amazonlinux2-aarch64-standard:3.0 -a ./aws-cb  -l public.ecr.aws/codebuild/local-builds:aarch64
+./codebuild_build.sh -i public.ecr.aws/codebuild/amazonlinux2-aarch64-standard:3.0 -l public.ecr.aws/codebuild/local-builds:aarch64
+
+# For Intel
+./codebuild_build.sh -i public.ecr.aws/codebuild/amazonlinux2-standard:3.0
 ```

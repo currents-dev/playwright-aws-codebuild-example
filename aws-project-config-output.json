@@ -1,0 +1,73 @@
+{
+  "name": "playwright-currents-example",
+  "arn": "arn:aws:codebuild:us-east-1:xxx:project/playwright-currents-example",
+  "source": {
+    "type": "GITHUB",
+    "location": "https://github.com/currents-dev/playwright-aws-codebuild-example.git",
+    "gitCloneDepth": 1,
+    "gitSubmodulesConfig": {
+      "fetchSubmodules": false
+    },
+    "reportBuildStatus": false,
+    "insecureSsl": false
+  },
+  "secondarySources": [],
+  "secondarySourceVersions": [],
+  "artifacts": {
+    "type": "NO_ARTIFACTS"
+  },
+  "secondaryArtifacts": [],
+  "cache": {
+    "type": "NO_CACHE"
+  },
+  "environment": {
+    "type": "LINUX_CONTAINER",
+    "image": "aws/codebuild/standard:7.0",
+    "computeType": "BUILD_GENERAL1_SMALL",
+    "environmentVariables": [
+      {
+        "name": "CURRENTS_RECORD_KEY",
+        "value": "arn:aws:secretsmanager:us-east-1:xxx:secret:currents/pw-example/record_key-vFzQh6:currents-playwright-example-record-key",
+        "type": "SECRETS_MANAGER"
+      }
+    ],
+    "privilegedMode": false,
+    "imagePullCredentialsType": "CODEBUILD"
+  },
+  "serviceRole": "arn:aws:iam::xxx:role/service-role/playwright-aws-codebuild-example",
+  "timeoutInMinutes": 60,
+  "queuedTimeoutInMinutes": 480,
+  "encryptionKey": "arn:aws:kms:us-east-1:xxx:alias/aws/s3",
+  "tags": [],
+  "created": "2023-11-15T00:25:21.329000-08:00",
+  "lastModified": "2023-11-15T13:14:04.548000-08:00",
+  "webhook": {
+    "url": "https://api.github.com/repos/currents-dev/playwright-aws-codebuild-example/hooks/443194766",
+    "payloadUrl": "https://codebuild.us-east-1.amazonaws.com/webhooks?t=xxx&v=1",
+    "filterGroups": [],
+    "buildType": "BUILD_BATCH"
+  },
+  "badge": {
+    "badgeEnabled": true,
+    "badgeRequestUrl": "https://codebuild.us-east-1.amazonaws.com/badges?uuid=xxx%3D&branch=main"
+  },
+  "logsConfig": {
+    "cloudWatchLogs": {
+      "status": "ENABLED"
+    },
+    "s3Logs": {
+      "status": "DISABLED",
+      "encryptionDisabled": false
+    }
+  },
+  "fileSystemLocations": [],
+  "buildBatchConfig": {
+    "serviceRole": "arn:aws:iam::xxx:role/service-role/playwright-aws-codebuild-example",
+    "restrictions": {
+      "maximumBuildsAllowed": 100,
+      "computeTypesAllowed": ["BUILD_GENERAL1_SMALL"]
+    },
+    "timeoutInMins": 480
+  },
+  "projectVisibility": "PRIVATE"
+}
