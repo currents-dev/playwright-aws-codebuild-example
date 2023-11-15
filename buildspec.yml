@@ -34,4 +34,4 @@ phases:
   build:
     commands:
       - echo $CURRENTS_RECORD_KEY
-      - DEBUG=currents* npx pwc run --project-id bnsqNa --key $CURRENTS_RECORD_KEY --ci-build-id $CODEBUILD_INITIATOR --shard $WORKER/3
+      - DEBUG=currents* npx pwc --project-id bnsqNa --key $CURRENTS_RECORD_KEY --ci-build-id $CODEBUILD_INITIATOR --shard $WORKER/3
