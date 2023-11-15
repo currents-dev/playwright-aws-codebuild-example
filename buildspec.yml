@@ -9,7 +9,7 @@ batch:
         - buildspec.yml
       env:
         variables:
-          WORKERS:
+          WORKER:
             - 1
             - 2
             - 3
@@ -31,4 +31,4 @@ phases:
   build:
     commands:
       - cd ./basic
-      - npx pwc run --project-id --key  --ci-build-id $CODEBUILD_INITIATOR
+      - npx pwc run --project-id bnsqNa --key $CURRENTS_RECORD_KEY --ci-build-id $CODEBUILD_INITIATOR --shard $WORKER/3
