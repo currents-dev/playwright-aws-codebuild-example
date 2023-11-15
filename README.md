@@ -8,7 +8,7 @@ This repository showcases running [Playwright](https://playwright.dev/) tests on
 
 ## Documentation
 
-The repo contains a few Playwright tests with one test that always fails (intentionally). The example configuration files use [Matrix Execution Strategy](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstrategymatrix) to run 3 containers for parallelization.
+The repo contains a few Playwright tests with one test that always fails (intentionally). The example configuration files use [AWS CodeBuild Batch Bulld matrix](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build.html#batch_build_matrix) to run 3 containers for parallelization.
 
 To reproduce the setup:
 
