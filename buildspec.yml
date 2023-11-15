@@ -30,5 +30,4 @@ phases:
       - npm ci
   build:
     commands:
-      - cd ./basic
       - npx pwc run --project-id bnsqNa --key $CURRENTS_RECORD_KEY --ci-build-id $CODEBUILD_INITIATOR --shard $WORKER/3

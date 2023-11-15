@@ -28,6 +28,7 @@ const config: PlaywrightTestConfig = {
     {
       name: "chromium",
       retries: 2,
+      testDir: "./basic",
       use: {
         ...devices["Desktop Chrome"],
       },
