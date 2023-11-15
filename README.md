@@ -12,7 +12,7 @@ The repo contains a few Playwright tests, one test always fails (intentionally) 
 
 The example [buildspec.yml](https://github.com/currents-dev/aws-codebuild-example/blob/main/buildspec.yml) defines a configuration for running Playwright tests in parallel mode using 3 workers in [matrix mode](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build.html#batch_build_matrix). The example is designed to be executed as a [batch build](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build.html).
 
-## Setup
+## AWS Setup
 
 ### Obtain Currents Credentials
 
