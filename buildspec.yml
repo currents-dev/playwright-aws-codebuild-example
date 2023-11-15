@@ -19,7 +19,14 @@ phases:
     runtime-versions:
       nodejs: 18
     commands:
-      # Set COMMIT_INFO variables to send Git specifics to
+      - npm ci
+      - npx playwright install
+      - npx playwright install-deps
+
+  build:
+    commands:
+      # Set COMMIT_INFO variables to override the default values. See https://currents.dev/readme/runs/run-details#playwright-cypress-git-information
+
       # - export COMMIT_INFO_BRANCH="$(git rev-parse HEAD | xargs git name-rev |
       #   cut -d' ' -f2 | sed 's/remotes\/origin\///g')"
       # - export COMMIT_INFO_MESSAGE="$(git log -1 --pretty=%B)"
@@ -27,11 +34,6 @@ phases:
       # - export COMMIT_INFO_AUTHOR="$(git log -1 --pretty=%an)"
       # - export COMMIT_INFO_SHA="$(git log -1 --pretty=%H)"
       # - export COMMIT_INFO_REMOTE="$(git config --get remote.origin.url)"
-      - npm ci
-      - npx playwright install
-      - npx playwright install-deps
 
-  build:
-    commands:
-      - echo $CURRENTS_RECORD_KEY
-      - DEBUG=currents* npx pwc --project-id bnsqNa --key $CURRENTS_RECORD_KEY --ci-build-id $CODEBUILD_INITIATOR --shard $WORKER/3
+      # update shard details according to overall # of containers
+      - npx pwc --project-id bnsqNa --key $CURRENTS_RECORD_KEY --ci-build-id $CODEBUILD_INITIATOR --shard $WORKER/3
