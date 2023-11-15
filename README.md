@@ -8,9 +8,32 @@ This repository showcases running [Playwright](https://playwright.dev/) tests on
 
 ## Documentation
 
-The repo contains a few Playwright tests, one test always fails (intentionally) for the purpose of demonstration.
+The repo contains a few Playwright tests, one test always fails (intentionally) for demonstration.
 
 The example [buildspec.yml](https://github.com/currents-dev/aws-codebuild-example/blob/main/buildspec.yml) defines a configuration for running Playwright tests in parallel mode using 3 workers in [matrix mode](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build.html#batch_build_matrix). The example is designed to be executed as a [batch build](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build.html).
+
+## Results
+
+The results are being reported to Currents for more efficient troubleshooting, and monitoring test suite flakiness and performance.
+
+Currents will collect the following information:
+
+- commit details
+- console output
+- screenshots
+- videos
+- trace files
+- timing
+- outcomes
+- flaky tests
+- error details
+- tags for more convenient management of the tests
+
+The example repository uses an AWS CodeBuild project that runs Playwright tests in parallel on 3 containers using [Playwright Sharding](https://playwright.dev/docs/test-parallel#shard-tests-between-multiple-machines).
+
+Here's an example of a build that has 1 batch job (1) triggering 3 parallel build jobs (2):
+
+The corresponding run in Currents dashboard:
 
 ## AWS Setup
 
@@ -40,7 +63,32 @@ Save the **Record Key** as `CURRENTS_RECORD_KEY` [Environment variable](https://
 - Configure the repository details and the events that should trigger new builds
 - Configure **Primary source webhook events > Build Type** to **Batch build** to start 3 parallel workers in [matrix mode](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build).
 
-- The example uses [CODEBUILD_INITIATOR](https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-env-vars.html) as a [CI Build ID](https://currents.dev/readme/guides/cypress-ci-build-id). When testing interactively, the CODEBUILD_INITIATOR will be set to the username of the build initiator. When running a batched build, the variable will have the batch build ID.
+#### Playwright Parallelization / Sharding
+
+The `buildspec.yml` file uses [matrix mode](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build) to start 3 containers for running the test in parallel. Each container will have the environment variable `WORKER` set to `1,2,3` correspondingly - we can use it to configure [Playwright Sharding](https://playwright.dev/docs/test-parallel#shard-tests-between-multiple-machines)
+
+```yml
+  build-matrix:
+    dynamic:
+      buildspec:
+        - buildspec.yml
+      env:
+        variables:
+          # Create 3 containers, each container will have the environment variable `WORKER` set to `1,2,3`
+          WORKER:
+            - 1
+            - 2
+            - 3
+
+        # and later, note the use of $WORKER env variable
+      - npx pwc --project-id bnsqNa --key $CURRENTS_RECORD_KEY --ci-build-id $CODEBUILD_INITIATOR --shard $WORKER/3
+```
+
+#### CI Build ID for interactive runs
+
+The example uses [CODEBUILD_INITIATOR](https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-env-vars.html) as a [CI Build ID](https://currents.dev/readme/guides/cypress-ci-build-id). If you trigger the build manually, the `CODEBUILD_INITIATOR` will be set to the username of the build initiator and you can get warnings after recording multiple results for the same CI build ID.
+
+When a build is triggered by a push / PR (and a batched build is created), the variable will have a unique ID associated that won' trigger conflict warnings.
 
 - Create a new Build Project in AWS CodeBuild - set the resource class and AWS-specific configuration according to your needs.
 
