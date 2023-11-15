@@ -1,6 +1,6 @@
 # 🎭 Currents - Playwright - AWS CodeBuild
 
-This repository showcases running [Playwright](https://playwright.dev/) tests on AWS Codebuild in parallel, while using [Currents](https://currents.dev) as the reporting dashboard.
+This repository showcases running [Playwright](https://playwright.dev/) tests on AWS Codebuild in parallel while using [Currents](https://currents.dev) as the reporting dashboard.
 
 <p align="center">
   <img width="830" src="https://static.currents.dev/currents-playwright-banner-gh.png" />
@@ -8,21 +8,14 @@ This repository showcases running [Playwright](https://playwright.dev/) tests on
 
 ## Documentation
 
-The repo contains a few Playwright tests with one test that always fails (intentionally). The example configuration files use [AWS CodeBuild Batch Bulld matrix](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build.html#batch_build_matrix) to run 3 containers for parallelization.
+The repo contains a few Playwright tests with one test that always fails (intentionally). The example [buildspec.yml](https://github.com/currents-dev/aws-codebuild-example/blob/main/buildspec.yml) defines a configuration for running cypress tests in parallel mode using 3 workers in [matrix mode](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build.html#batch_build_matrix). The example is designed to be executed as a [batch build](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build.html).
 
 To reproduce the setup:
 
+- Create a new Build Project in AWS CodeBuild - set the resource class and AWS-specific configuration according to your needs.
+
 - Create an organization, get your **Record Key** and **Project Id** at https://app.currents.dev
-- Set [GitHub secret variable](https://docs.github.com/en/actions/reference/encrypted-secrets) `CURRENTS_RECORD_KEY`.
+- Save **Record Key** as `CURRENTS_RECORD_KEY`[Environment variable](https://docs.aws.amazon.com/codebuild/latest/userguide/change-project-console.html#change-project-console-environment). Treat this variable as a secret - i.e. store it in a secure storage.
+- Update the command in `buildspec.yml` with the **Project Id**
 
-This is an example repository that showcases using [Currents.dev](https://currents.dev) for running parallel cypress tests using AWS CodeBuild CI
-
-The example [buildspec.yml](https://github.com/currents-dev/aws-codebuild-example/blob/main/buildspec.yml) defines a configuration for running cypress tests in parallel mode using 3 workers in [matrix mode](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build.html#batch_build_matrix). The example is designed to be executed within a [batch build](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build.html).
-
-- Note: The example uses [CODEBUILD_INITIATOR](https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-env-vars.html) as a [CI Build ID](https://currents.dev/readme/guides/cypress-ci-build-id). When testing interactively, the CODEBUILD_INITIATOR will be set to the username of the build initiator. When running a batched build, the variable will have the batch build id.
-
-- Note: get your record key from [Currents.dev](https://app.currents.dev) and set [AWS CodeBuild Environment Variable](https://docs.aws.amazon.com/codebuild/latest/userguide/change-project-console.html#change-project-console-environment) variable `CURRENTS_RECORD_KEY`
-
-- Note: set the `projectId` in `currents.config.js` - obtain the project id from [Currents.dev](https://app.currents.dev)
-
-- Note: use CLI arguments to customize your cypress-cloud runs, e.g.: `npx cypress-cloud run --parallel --record --key <your currents.dev key> --group groupA`
+- Note: The example uses [CODEBUILD_INITIATOR](https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-env-vars.html) as a [CI Build ID](https://currents.dev/readme/guides/cypress-ci-build-id). When testing interactively, the CODEBUILD_INITIATOR will be set to the username of the build initiator. When running a batched build, the variable will have the batch build ID.
