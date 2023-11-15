@@ -17,7 +17,7 @@ batch:
 phases:
   install:
     runtime-versions:
-      nodejs: latest
+      nodejs: 18
     commands:
       # Set COMMIT_INFO variables to send Git specifics to
       # - export COMMIT_INFO_BRANCH="$(git rev-parse HEAD | xargs git name-rev |
@@ -28,11 +28,10 @@ phases:
       # - export COMMIT_INFO_SHA="$(git log -1 --pretty=%H)"
       # - export COMMIT_INFO_REMOTE="$(git config --get remote.origin.url)"
       - npm ci
-      - npx playwright install
-      - npx playwright install-deps
+      # - npx playwright install
+      # - npx playwright install-deps
 
   build:
     commands:
-      - ls -la
-      - npx pwc run --project-id bnsqNa --key $CURRENTS_RECORD_KEY --ci-build-id $CODEBUILD_INITIATOR --shard $WORKER/3
-      - npx playwright test
+      - echo $CURRENTS_RECORD_KEY
+      - DEBUG=currents* npx pwc run --project-id bnsqNa --key $CURRENTS_RECORD_KEY --ci-build-id $CODEBUILD_INITIATOR --shard $WORKER/3

@@ -24,7 +24,20 @@ To reproduce the setup:
 
 The example uses `pwc` CLI command to run the tests, you can use `npx playwright test` command and configure `@currents/playwright` as a reporter. Please refer to [documentation](https://currents.dev/readme/integration-with-playwright/currents-playwright#currents-playwright-reporter).
 
-### AWS CodeBuild Configuration Notes
+## Running Locally
+
+Based on: https://docs.aws.amazon.com/codebuild/latest/userguide/use-codebuild-agent.html
+
+```sh
+
+curl -O  https://raw.githubusercontent.com/aws/aws-codebuild-docker-images/master/local_builds/codebuild_build.sh
+chmod +x codebuild_build.sh
+
+# For MacBook M1
+./codebuild_build.sh -i public.ecr.aws/codebuild/amazonlinux2-aarch64-standard:3.0 -a ./aws-cb  -l public.ecr.aws/codebuild/local-builds:aarch64
+```
+
+## AWS CodeBuild Configuration Notes
 
 - It is strongly recommended to use your **Record Key** in a secure secrets storage.
 
