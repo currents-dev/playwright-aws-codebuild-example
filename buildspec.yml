@@ -1,0 +1,34 @@
+## buildspec.yml
+version: 0.2
+
+batch:
+  fast-fail: false
+  build-matrix:
+    dynamic:
+      buildspec:
+        - buildspec.yml
+      env:
+        variables:
+          WORKERS:
+            - 1
+            - 2
+            - 3
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: latest
+    commands:
+      # Set COMMIT_INFO variables to send Git specifics to
+      - export COMMIT_INFO_BRANCH="$(git rev-parse HEAD | xargs git name-rev |
+        cut -d' ' -f2 | sed 's/remotes\/origin\///g')"
+      - export COMMIT_INFO_MESSAGE="$(git log -1 --pretty=%B)"
+      - export COMMIT_INFO_EMAIL="$(git log -1 --pretty=%ae)"
+      - export COMMIT_INFO_AUTHOR="$(git log -1 --pretty=%an)"
+      - export COMMIT_INFO_SHA="$(git log -1 --pretty=%H)"
+      - export COMMIT_INFO_REMOTE="$(git config --get remote.origin.url)"
+      - npm ci
+  build:
+    commands:
+      - cd ./basic
+      - npx pwc run --project-id --key  --ci-build-id $CODEBUILD_INITIATOR

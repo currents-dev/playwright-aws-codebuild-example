@@ -1,0 +1,20 @@
+{
+  "name": "playwright-aws-codebuild-example",
+  "version": "1.0.0",
+  "description": "This is an example repository that showcases using [Currents.dev](https://currents.dev) for running Playwright tests on AWS CodeBuild",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.2",
+    "typescript": "^5.0.2"
+  },
+  "devDependencies": {
+    "@currents/playwright": "^0.10.6",
+    "@playwright/test": "^1.39.0"
+  }
+}
