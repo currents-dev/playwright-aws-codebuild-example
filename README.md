@@ -1,3 +1,15 @@
+# ⚠️ ARCHIVED REPOSITORY ⚠️
+
+> **This repository is now archived and read-only.**
+>
+> For the latest examples and updates, please visit our new repository:
+>
+> # [👉 https://github.com/currents-dev/currents-examples](https://github.com/currents-dev/currents-examples/tree/main/playwright/ci/aws-codebuild)
+
+---
+
+
+
 # 🎭 Currents - Playwright - AWS CodeBuild
 
 <img src="https://codebuild.us-east-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiNzlTU0M4NGpZdHFKTWIrTjAyak9uSGRiUDFIazVwMHZzUDJHT2ZiSlcvZ0Z3SnN5a3ZZcTNOcHhkbUU4SUtXMjMydkdEN25sWkZzN01pSjFpM0NCaTgwPSIsIml2UGFyYW1ldGVyU3BlYyI6IlVLMEpZYmJCL21acjZNeVIiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=main" />
